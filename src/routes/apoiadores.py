@@ -18,6 +18,11 @@ apoiadores_routes = Blueprint('apoiadores_routes', __name__)
             "in": "query",
             "name": "email",
             "required": False,
+        },
+        {
+            "in": "query",
+            "name": "estado",
+            "required": False,
         }
 ]})
 def get_apoiador_endpoint(*args):
@@ -29,23 +34,30 @@ def get_apoiador_endpoint(*args):
             description: ...
     """
     email = request.args.get('email')
-    if not email:
-        usuarios = ApoiadoresControllers().pegar_apoiadores()
+    estado = request.args.get('estado')
+    if not email and not estado:
+        apoiadores = ApoiadoresControllers().pegar_apoiadores()
         return make_response(jsonify({
-            'response': usuarios,
+            'response': apoiadores,
             'msg': 'retornado todos os usuários do storage'
         }))
+    if estado:
+        apoiadores = ApoiadoresControllers().pegar_apoiadores(estado = True)
+        return make_response(jsonify({
+            'response': apoiadores,
+            'msg': 'Retornado todos os apoiadores verificados!'
+        }), HttpCodesResponses().response_codes.OK.value)
 
-    usuario = ApoiadoresControllers().pegar_apoiador(email)
+    apoiador = ApoiadoresControllers().pegar_apoiador(email)
     
-    if not usuario:
+    if not apoiador:
         return make_response(jsonify({
             'response': None,
             'msg': 'Não existe nenhum usuário com este email.'
         }))
     
     return make_response(jsonify({
-        'response': usuario,
+        'response': apoiador,
         'msg': f'Retornado os dados de {email}'
     }))
 
@@ -81,6 +93,11 @@ def get_apoiador_endpoint(*args):
             'in': 'formData',
             'type': 'string',
             'name': 'profissao',
+            'requerid': True
+        },{
+            'in': 'formData',
+            'type': 'string',
+            'name': 'bibliografia',
             'requerid': True
         },{
             'in': 'formData',
@@ -164,6 +181,7 @@ def register_user_endpoint(*args):
         'nacionalidade': request.form['nacionalidade'],
         'disponibilidade': request.form['disponibilidade'],
         'atuacao': request.form['atuacao'],
+        'bibliografia': request.form['bibliografia'],
         'photo': f'{id_}.png',
         'csv': f'{id_}.pdf'
     }

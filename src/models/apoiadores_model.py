@@ -1,6 +1,6 @@
 from sqlalchemy import (
     Column,Integer, String, TIMESTAMP,
-    BOOLEAN
+    BOOLEAN, TEXT
 )
 from datetime import datetime
 from src.domain.configs.database import base
@@ -17,6 +17,7 @@ class Apoiadores(base):
     telefone = Column(String(255), nullable = False, unique = True)
     senha = Column(String(255), nullable = False)
     sobrenome = Column(String(255), nullable = False)
+    bibliografia = Column(TEXT, nullable = False)
     profissao = Column(String(255), nullable = False)
     especializacao = Column(String(255), nullable = False)
     nacionalidade = Column(String(255), nullable = False)
@@ -30,7 +31,7 @@ class Apoiadores(base):
     
     def __init__(self, nome: str, sobrenome: str, profissao: str, especializacao: str,
     nacionalidade: str, disponibilidade: str, atuacao: str, foto: str, sala_de_meet: str,
-    estado: str, csv: str, email: str, senha: str, telefone: str) -> None:
+    estado: str, csv: str, email: str, senha: str, telefone: str, bibliografia: str) -> None:
         """"""
         self.nome = nome
         self.sobrenome = sobrenome
@@ -46,3 +47,4 @@ class Apoiadores(base):
         self.email = email
         self.senha = senha
         self.telefone = telefone
+        self.bibliografia = bibliografia

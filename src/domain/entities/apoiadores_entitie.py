@@ -9,6 +9,7 @@ class EApoiadores:
     telefone: str
     sobrenome: str
     profissao: str
+    bibliografia: str
     especializacao: str
     nacionalidade: str
     disponibilidade: str #hora

@@ -8,6 +8,7 @@ class ApoiadoresDantic(BaseModel):
     telefone: str
     senha: str
     sobrenome: str
+    bibliografia: str
     profissao: str
     especializacao: str
     nacionalidade: str

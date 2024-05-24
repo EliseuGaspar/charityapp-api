@@ -24,7 +24,7 @@ class Convertors:
                 profissao = json.get('profissao'), especializacao = json.get('especializacao'),
                 nacionalidade = json.get('nacionalidade'), disponibilidade = json.get('disponibilidade'),
                 atuacao = json.get('atuacao'), foto = json.get('photo'), sala_de_meet = json.get('sala_de_meet'),
-                estado = json.get('estado'), csv = json.get('csv')
+                estado = json.get('estado'), csv = json.get('csv'), bibliografia = json.get('bibliografia')
             )
 
     @staticmethod

@@ -34,7 +34,7 @@ class ApoiadoresControllers:
                 disponibilidade = apoiador.disponibilidade, atuacao = apoiador.atuacao,
                 foto = apoiador.foto, sala_de_meet = apoiador.sala_de_meet, senha = senha,
                 estado = apoiador.estado, csv = apoiador.csv, email = apoiador.email,
-                telefone = apoiador.telefone
+                telefone = apoiador.telefone, bibliografia = apoiador.bibliografia
             )
             self._session.add(novo_apoiador)
             self._session.commit()
@@ -61,7 +61,7 @@ class ApoiadoresControllers:
                 'msg': 'Não foi possível registrar seu usuário. Existe dados duplicados.'
             }), HttpCodesResponses().response_codes.INTERNAL_SERVER_ERROR.value)
 
-    def pegar_apoiadores(self, ) -> list[dict] | bool:
+    def pegar_apoiadores(self, estado: bool = False) -> list[dict] | bool:
         """"""
         apoiadores = self._session.query(Apoiadores).all()
 
@@ -73,7 +73,11 @@ class ApoiadoresControllers:
         for user in apoiadores:
             user_ = PydanticFactory.convert(user).dict()
             user_.pop('senha')
-            lista_apoiadores.append(user_)
+            if not estado:
+                lista_apoiadores.append(user_)
+            else:
+                if user_.get('estado'):
+                    lista_apoiadores.append(user_)
 
         return lista_apoiadores
 
